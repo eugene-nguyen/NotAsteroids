@@ -1,26 +1,35 @@
 extends KinematicBody2D
-# This script controls movement.
 
-export (int) var speed = 200
-export (float) var rotation_speed = 1.5
+export (int) var turn_speed = 180
+export (int) var move_speed = 150
+export (float) var acceleration = 0.05
+export (float) var deceleration = 0.01
 
-var velocity = Vector2()
-var rotation_dir = 0
+var motion = Vector2(0, 0)
 
-func get_input():
-	rotation_dir = 0
-	velocity = Vector2()
-	if Input.is_action_pressed("ui_right"):
-		rotation_dir += 1
+var screen_size
+var screen_buffer = 8
+
+func get_input(delta, move_direction):
 	if Input.is_action_pressed("ui_left"):
-		rotation_dir -= 1
-	if Input.is_action_pressed('ui_down'):
-		velocity = Vector2(-speed, 0).rotated(rotation)
-	if Input.is_action_pressed('ui_up'):
-		velocity = Vector2(speed, 0).rotated(rotation)
+		rotation_degrees -= turn_speed * delta
+	elif Input.is_action_pressed("ui_right"):
+		rotation_degrees += turn_speed * delta
+	
+	if Input.is_action_pressed("ui_up"):
+		motion = motion.linear_interpolate(move_direction, acceleration)
+	elif Input.is_action_pressed("ui_down"):
+		motion = motion.linear_interpolate(-move_direction, acceleration)
+	else:
+		motion = motion.linear_interpolate(Vector2(0, 0), deceleration)
 
+func _ready():
+	screen_size = get_viewport_rect().size
 
-func _physics_process(delta):
-	get_input()
-	rotation += rotation_dir * rotation_speed * delta
-	velocity = move_and_slide(velocity)
+func _process(delta):
+	var move_direction = Vector2(1,0).rotated(rotation)
+	get_input(delta, move_direction)
+	
+	position += motion * move_speed * delta
+	position.x = wrapf(position.x, -screen_buffer, screen_size.x + screen_buffer)
+	position.y = wrapf(position.y, -screen_buffer, screen_size.y + screen_buffer)

@@ -6,11 +6,13 @@
 [node name="World" type="Node"]
 
 [node name="KinematicBody2D" type="KinematicBody2D" parent="."]
-position = Vector2( 448, 288 )
+position = Vector2( 448, 287 )
 script = ExtResource( 2 )
 __meta__ = {
 "_edit_group_": true
 }
+turn_speed = 200
+move_speed = 400
 
 [node name="Sprite" type="Sprite" parent="KinematicBody2D"]
 texture = ExtResource( 1 )
