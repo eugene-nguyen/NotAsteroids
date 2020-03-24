@@ -5,21 +5,24 @@ extends KinematicBody2D
 # var a = 2
 # var b = "text"
 
-var speed = 150
-var velocity = Vector2()
+var turn_speed
+var move_speed
+var motion = Vector2()
 
 var screen_size
 var screen_buffer = 8
 
-func start(pos, dir):
+func start(pos, dir, mov, tur):
 	rotation = dir
 	position = pos
-	velocity = Vector2(speed, 0).rotated(rotation)
+	move_speed = mov
+	turn_speed = tur
+	motion = Vector2(move_speed, 0).rotated(rotation)
 	
 func _physics_process(delta):
-	var collision = move_and_collide(velocity * delta)
+	var collision = move_and_collide(motion * delta)
 	if collision:
-		velocity = velocity.bounce(collision.normal)
+		motion = motion.bounce(collision.normal)
 		if collision.collider.has_method("hit"):
 			collision.collider.hit()
 
@@ -29,5 +32,6 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	rotation_degrees += turn_speed * delta
 	position.x = wrapf(position.x, -screen_buffer, screen_size.x + screen_buffer)
 	position.y = wrapf(position.y, -screen_buffer, screen_size.y + screen_buffer)

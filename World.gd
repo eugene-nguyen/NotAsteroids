@@ -17,10 +17,12 @@ func _ready():
 	while i < enemyCount:
 		var enemy_x_position = rng.randi_range(0, 1280)
 		var enemy_y_position = rng.randi_range(0, 720)
+		var enemy_turn_speed = rng.randi_range(-100, 100)
+		var enemy_move_speed = rng.randi_range(0, 100)
 		var enemy_position = Vector2(enemy_x_position, enemy_y_position)
 		var enemy_rotation = rng.randi_range(0, 360)
 		var e = Enemy.instance()
-		e.start(enemy_position, enemy_rotation)
+		e.start(enemy_position, enemy_rotation, enemy_move_speed, enemy_turn_speed)
 		add_child(e)
 		i = i + 1
 	
