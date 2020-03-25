@@ -20,3 +20,6 @@ move_speed = 400
 [node name="Sprite" type="Sprite" parent="Player"]
 rotation = 1.5708
 texture = ExtResource( 1 )
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Player"]
+polygon = PoolVector2Array( -25.9424, -31.6033, 26.2577, -31.1955, 30.7436, -27.1174, 31.1514, 25.8983, 27.8889, 30.792, -25.1267, 31.1998, -30.6322, 27.1217, -31.2439, -26.5057 )

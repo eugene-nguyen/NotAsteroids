@@ -18,7 +18,10 @@ func _physics_process(delta):
 	var collision = move_and_collide(velocity * delta)
 	if collision:
 		print(collision.collider.name)
-		velocity = velocity.bounce(collision.normal)
+		if collision.collider.name == "Player":
+			pass
+		else:
+			velocity = velocity.bounce(collision.normal)
 
 func _ready():
 	screen_size = get_viewport_rect().size
