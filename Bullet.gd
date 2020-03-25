@@ -11,9 +11,10 @@ func start(pos, dir):
 func _physics_process(delta):
 	var collision = move_and_collide(velocity * delta)
 	if collision:
-		velocity = velocity.bounce(collision.normal)
-		if collision.collider.has_method("hit"):
-			collision.collider.hit()
-
+		print(collision.collider.name)
+		if collision.collider.get_node("Enemy"):
+			hide()
+			queue_free()
+	
 func _on_VisibilityNotifier2D_screen_exited():
 	queue_free()
