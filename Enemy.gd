@@ -1,13 +1,8 @@
 extends KinematicBody2D
 
-
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
-
 var turn_speed
 var move_speed
-var motion = Vector2()
+var velocity = Vector2()
 
 var screen_size
 var screen_buffer = 8
@@ -17,15 +12,13 @@ func start(pos, dir, mov, tur):
 	position = pos
 	move_speed = mov
 	turn_speed = tur
-	motion = Vector2(move_speed, 0).rotated(rotation)
+	velocity = Vector2(move_speed, 0).rotated(rotation)
 	
 func _physics_process(delta):
-	var collision = move_and_collide(motion * delta)
+	var collision = move_and_collide(velocity * delta)
 	if collision:
-		motion = motion.bounce(collision.normal)
-		if collision.collider.has_method("hit"):
-			collision.collider.hit()
-
+		print(collision.collider.name)
+		velocity = velocity.bounce(collision.normal)
 
 func _ready():
 	screen_size = get_viewport_rect().size

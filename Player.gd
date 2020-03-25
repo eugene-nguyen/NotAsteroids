@@ -3,7 +3,7 @@ extends KinematicBody2D
 export (int) var turn_speed = 180
 export (int) var move_speed = 150
 export (float) var acceleration = 0.05
-export (float) var deceleration = 0.0125
+export (float) var deceleration = 0.025
 
 var motion = Vector2(0, 0)
 var Bullet = preload("res://Bullet.tscn")

@@ -15,8 +15,8 @@ func _ready():
 	enemyCount = rng.randi_range(6, 8)
 	var i = 0
 	while i < enemyCount:
-		var enemy_x_position = rng.randi_range(0, 1280)
-		var enemy_y_position = rng.randi_range(0, 720)
+		var enemy_x_position = rng.randi_range(0, 3000)
+		var enemy_y_position = rng.randi_range(0, 3000)
 		var enemy_turn_speed = rng.randi_range(-100, 100)
 		var enemy_move_speed = rng.randi_range(0, 100)
 		var enemy_position = Vector2(enemy_x_position, enemy_y_position)

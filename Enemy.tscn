@@ -10,3 +10,6 @@ script = ExtResource( 2 )
 modulate = Color( 1, 0.0588235, 0.0588235, 1 )
 position = Vector2( -0.350845, 0.000213623 )
 texture = ExtResource( 1 )
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PoolVector2Array( -26.8017, -31.8298, 27.0119, -31.5524, 31.4501, -27.3916, 32.0049, 25.5899, 27.2893, 30.8603, -27.3565, 31.1376, -32.0721, 26.6994, -32.0721, -26.0046 )
