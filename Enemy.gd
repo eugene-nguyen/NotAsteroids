@@ -34,3 +34,15 @@ func _on_EnemyDetector_body_shape_entered(body_id, body, body_shape, area_shape)
 
 func _on_BulletDetector_area_entered(area):
 	queue_free()
+
+
+
+
+
+func _on_Player_area_entered(area):
+	queue_free()
+	
+
+
+func _on_Player_hit():
+	$UI.show_game_over()

@@ -1,4 +1,6 @@
-extends KinematicBody2D
+extends Area2D
+
+signal hit
 
 export (int) var turn_speed = 180
 export (int) var move_speed = 150
@@ -32,6 +34,7 @@ func shoot(move_direction):
 
 func _ready():
 	screen_size = get_viewport_rect().size
+	hide()
 
 func _process(delta):
 	var move_direction = Vector2(1,0).rotated(rotation)
@@ -40,3 +43,20 @@ func _process(delta):
 	position += motion * move_speed * delta
 	position.x = wrapf(position.x, -screen_buffer, screen_size.x + screen_buffer)
 	position.y = wrapf(position.y, -screen_buffer, screen_size.y + screen_buffer)
+
+
+
+
+func _on_Player_body_entered(body):
+	hide()
+	emit_signal("hit")
+	$CollisionPolygon2D.set_deferred("disabled", true)
+	
+func start(pos):
+	position = pos
+	show()
+	$CollisionPolygon2D.disabled=false
+
+
+func _on_Player_area_entered(area):
+	pass

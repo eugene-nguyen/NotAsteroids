@@ -31,3 +31,27 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	pass
+
+
+
+	
+
+
+func _on_StartTimer_timeout():
+	#increase the score if going by timer..
+	pass
+	
+
+
+func _on_UI_start_game():
+	$Player._ready()
+	$Player.start($StartPosition.position)
+	$StartTimer.start()
+	$UI.show_message("Get Ready")
+	
+
+
+
+
+func _on_Player_hit():
+	$UI.show_game_over()
