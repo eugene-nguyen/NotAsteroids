@@ -17,11 +17,7 @@ func start(pos, dir, mov, tur):
 func _physics_process(delta):
 	var collision = move_and_collide(velocity * delta)
 	if collision:
-		print(collision.collider.name)
-		if collision.collider.name == "Player":
-			pass
-		else:
-			velocity = velocity.bounce(collision.normal)
+		velocity = velocity.bounce(collision.normal)
 
 func _ready():
 	screen_size = get_viewport_rect().size
@@ -31,3 +27,10 @@ func _process(delta):
 	rotation_degrees += turn_speed * delta
 	position.x = wrapf(position.x, -screen_buffer, screen_size.x + screen_buffer)
 	position.y = wrapf(position.y, -screen_buffer, screen_size.y + screen_buffer)
+
+func _on_EnemyDetector_body_shape_entered(body_id, body, body_shape, area_shape):
+	print("enemies touched! ew!") 
+	#velocity = velocity.bounce()
+
+func _on_BulletDetector_area_entered(area):
+	queue_free()
