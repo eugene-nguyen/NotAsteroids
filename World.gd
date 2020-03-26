@@ -12,7 +12,7 @@ var enemyCount
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	rng.randomize()
-	enemyCount = rng.randi_range(6, 8)
+	enemyCount = rng.randi_range(15, 20)
 	var i = 0
 	while i < enemyCount:
 		var enemy_x_position = rng.randi_range(0, 3000)
