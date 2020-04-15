@@ -1,20 +1,25 @@
 extends Node
 
+
+
+# Player variables.
+var lives = 3
+var score = 0
+
+# Enemy variables.
 var Enemy = preload("res://Enemy.tscn")
-
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
-
 var rng = RandomNumberGenerator.new()
-var enemyCount
+var remaining_enemies
+var max_enemies_in_round
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	rng.randomize()
-	enemyCount = rng.randi_range(15, 20)
+# Signals.
+signal game_over
+
+func spawn_enemies(min_enemies, max_enemies):
+	max_enemies_in_round = rng.randi_range(min_enemies, max_enemies)
+	remaining_enemies = max_enemies_in_round
 	var i = 0
-	while i < enemyCount:
+	while i < max_enemies_in_round:
 		var enemy_x_position = rng.randi_range(0, 3000)
 		var enemy_y_position = rng.randi_range(0, 3000)
 		var enemy_turn_speed = rng.randi_range(-100, 100)
@@ -25,33 +30,34 @@ func _ready():
 		e.start(enemy_position, enemy_rotation, enemy_move_speed, enemy_turn_speed)
 		add_child(e)
 		i = i + 1
-	
 
+func round_start():
+	$Player.start($StartPosition.position)
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	rng.randomize()
+	spawn_enemies(15, 20)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	pass
-
-
-
-	
-
+	if (lives == 0):
+		emit_signal("game_over")
+		$UI.show_game_over()
+	if (remaining_enemies == 0):
+		round_start()
 
 func _on_StartTimer_timeout():
-	#increase the score if going by timer..
-	pass
-	
-
+	round_start()
 
 func _on_UI_start_game():
 	$Player._ready()
-	$Player.start($StartPosition.position)
 	$StartTimer.start()
 	$UI.show_message("Get Ready")
-	
 
+func _on_Player_player_got_hit():
+	lives -= 1
+	$UI.life_count(lives)
 
-
-
-func _on_Player_hit():
-	$UI.show_game_over()
+func _on_Enemy_enemy_got_hit():
+	print("enemy got hit")

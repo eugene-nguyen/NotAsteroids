@@ -2,17 +2,23 @@ extends CanvasLayer
 
 signal start_game
 
+func life_count(lives):
+	$LifeLabel.text = str(lives)
+	$LifeLabel.show()
+
+func score_count(score):
+	$ScoreLabel.text = str(score)
+	$ScoreValue.show()
 
 func show_message(text):
 	$MessageLabel.text = text
 	$MessageLabel.show()
 	$MessageTimer.start()
 
-
-
 #function that shows the game over screen
 #when you are dead
 func show_game_over():
+	emit_signal("game_over")
 	show_message("Game Over")
 	yield($MessageTimer, "timeout")
 	
@@ -23,14 +29,6 @@ func show_game_over():
 	
 	$StartButton.show()
 	
-	
-
-
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
-
-
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass # Replace with function body.

@@ -7,6 +7,8 @@ var velocity = Vector2()
 var screen_size
 var screen_buffer = 8
 
+signal enemy_got_hit
+
 func start(pos, dir, mov, tur):
 	rotation = dir
 	position = pos
@@ -33,16 +35,6 @@ func _on_EnemyDetector_body_shape_entered(body_id, body, body_shape, area_shape)
 	#velocity = velocity.bounce()
 
 func _on_BulletDetector_area_entered(area):
+	emit_signal("enemy_got_hit")
 	queue_free()
 
-
-
-
-
-func _on_Player_area_entered(area):
-	queue_free()
-	
-
-
-func _on_Player_hit():
-	$UI.show_game_over()

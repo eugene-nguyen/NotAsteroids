@@ -19,10 +19,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -240.868
-margin_top = -127.753
-margin_right = 300.132
-margin_bottom = -49.7532
+margin_left = -272.52
+margin_top = -168.369
+margin_right = 313.48
+margin_bottom = -9.36856
 custom_fonts/font = SubResource( 1 )
 text = "Eugene's Creme"
 align = 1
@@ -46,5 +46,45 @@ __meta__ = {
 [node name="MessageTimer" type="Timer" parent="."]
 wait_time = 2.0
 one_shot = true
+
+[node name="LifeText" type="Label" parent="."]
+margin_left = 17.0
+margin_top = 27.0
+margin_right = 58.0
+margin_bottom = 42.0
+text = "Lives: "
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LifeLabel" type="Label" parent="."]
+margin_left = 57.1849
+margin_top = 26.8951
+margin_right = 112.185
+margin_bottom = 65.8951
+text = "3"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ScoreText" type="Label" parent="."]
+margin_left = 17.0
+margin_top = 51.0
+margin_right = 58.0
+margin_bottom = 66.0
+text = "Score:"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ScoreValue" type="Label" parent="."]
+margin_left = 57.1849
+margin_top = 50.8951
+margin_right = 112.185
+margin_bottom = 89.8951
+text = "0"
+__meta__ = {
+"_edit_use_anchors_": false
+}
 [connection signal="pressed" from="StartButton" to="." method="_on_StartButton_pressed"]
 [connection signal="timeout" from="MessageTimer" to="." method="_on_MessageTimer_timeout"]
