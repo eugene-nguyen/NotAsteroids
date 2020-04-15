@@ -8,7 +8,7 @@
 [ext_resource path="res://UI.tscn" type="PackedScene" id=6]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 31.5963, 31.7532 )
+extents = Vector2( 31.7957, 31.9637 )
 
 [node name="zaWordo" type="Node"]
 script = ExtResource( 3 )
@@ -17,7 +17,7 @@ script = ExtResource( 3 )
 
 [node name="Bullet" parent="." instance=ExtResource( 4 )]
 
-[node name="Player" type="Area2D" parent="."]
+[node name="Player" type="KinematicBody2D" parent="."]
 position = Vector2( 478.622, 276.808 )
 collision_layer = 0
 collision_mask = 0
@@ -29,8 +29,16 @@ move_speed = 400
 rotation = 1.5708
 texture = ExtResource( 1 )
 
-[node name="CollisionPolygon2D" type="CollisionShape2D" parent="Player"]
+[node name="DamageDetector" type="Area2D" parent="Player"]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player/DamageDetector"]
 shape = SubResource( 1 )
+
+[node name="RespawnTimer" type="Timer" parent="Player"]
+
+[node name="InvulnTimer" type="Timer" parent="Player"]
 
 [node name="StartPosition" type="Position2D" parent="."]
 position = Vector2( 640, 360 )
@@ -40,7 +48,9 @@ wait_time = 2.0
 one_shot = true
 
 [node name="UI" parent="." instance=ExtResource( 6 )]
-[connection signal="body_entered" from="Player" to="Player" method="_on_Player_body_entered"]
 [connection signal="hit" from="Player" to="." method="_on_Player_hit"]
+[connection signal="area_entered" from="Player/DamageDetector" to="Player" method="_on_DamageDetector_area_entered"]
+[connection signal="timeout" from="Player/RespawnTimer" to="Player" method="_on_RespawnTimer_timeout"]
+[connection signal="timeout" from="Player/InvulnTimer" to="Player" method="_on_InvulnTimer_timeout"]
 [connection signal="timeout" from="StartTimer" to="." method="_on_StartTimer_timeout"]
 [connection signal="start_game" from="UI" to="." method="_on_UI_start_game"]

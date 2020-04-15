@@ -1,4 +1,4 @@
-extends Area2D
+extends KinematicBody2D
 
 signal hit
 
@@ -6,12 +6,19 @@ export (int) var turn_speed = 180
 export (int) var move_speed = 150
 export (float) var acceleration = 0.05
 export (float) var deceleration = 0.025
-
 var motion = Vector2(0, 0)
-var Bullet = preload("res://Bullet.tscn")
 
 var screen_size
 var screen_buffer = 8
+
+var in_play = true # If this becomes false (when game over occurs), then the player doesn't respawn, obviously.)
+var respawn_time = 3
+var respawn_timer
+var invuln_time = 3
+var invuln_timer
+
+signal player_got_hit
+var Bullet = preload("res://Bullet.tscn")
 
 func get_input(delta, move_direction):
 	if Input.is_action_pressed("ui_left"):
@@ -50,13 +57,41 @@ func _process(delta):
 func _on_Player_body_entered(body):
 	hide()
 	emit_signal("hit")
-	$CollisionPolygon2D.set_deferred("disabled", true)
+	$DamageDetector/CollisionShape2D.set_deferred("disabled", true)
 	
 func start(pos):
 	position = pos
 	show()
-	$CollisionPolygon2D.disabled=false
+	$DamageDetector/CollisionShape2D.disabled=false
 
 
 func _on_Player_area_entered(area):
 	pass
+
+func _on_DamageDetector_area_entered(area):
+	emit_signal("player_got_hit")
+	$DamageDetector/CollisionShape2D.set_deferred("disabled", true)
+	hide()
+	if (in_play):
+		respawn_timer = get_node("RespawnTimer")
+		respawn_timer.set_wait_time(respawn_time)
+		respawn_timer.start()
+	print("Player has been hit!")
+
+
+func _on_RespawnTimer_timeout():
+	position.x = 500
+	position.y = 275
+	rotation_degrees = 0
+	motion = Vector2(0, 0)
+	respawn_timer.stop()
+	show()
+	print("Player has respawned! (Invulnerable!)")
+	invuln_timer = get_node("InvulnTimer")
+	invuln_timer.set_wait_time(respawn_time)
+	invuln_timer.start()
+
+
+func _on_InvulnTimer_timeout():
+	$DamageDetector/CollisionShape2D.disabled = false
+	print("Player is no longer invulnerable!")
