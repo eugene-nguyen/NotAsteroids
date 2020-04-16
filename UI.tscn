@@ -79,9 +79,9 @@ __meta__ = {
 
 [node name="ScoreValue" type="Label" parent="."]
 margin_left = 57.1849
-margin_top = 50.8951
+margin_top = 51.5004
 margin_right = 112.185
-margin_bottom = 89.8951
+margin_bottom = 90.5004
 text = "0"
 __meta__ = {
 "_edit_use_anchors_": false

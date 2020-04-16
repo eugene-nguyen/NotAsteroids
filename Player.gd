@@ -21,6 +21,10 @@ var invuln_timer
 signal player_got_hit
 var Bullet = preload("res://Bullet.tscn")
 
+func disable_self():
+	$DamageDetector/CollisionShape2D.set_deferred("disabled", true)
+	hide()
+
 func get_input(delta, move_direction):
 	if alive:
 		if Input.is_action_pressed("ui_left"):
@@ -51,8 +55,7 @@ func start(pos):
 
 func _ready():
 	screen_size = get_viewport_rect().size
-	$DamageDetector/CollisionShape2D.set_deferred("disabled", true)
-	hide()
+	disable_self()
 
 func _process(delta):
 	var move_direction = Vector2(1,0).rotated(rotation)
@@ -65,14 +68,12 @@ func _process(delta):
 func _on_Player_body_entered(body):
 	hide()
 	emit_signal("player_got_hit")
-	$DamageDetector/CollisionShape2D.set_deferred("disabled", true)
-	alive = false
+	disable_self()
 
 func _on_DamageDetector_area_entered(area):
 	emit_signal("player_got_hit")
 	hide()
-	$DamageDetector/CollisionShape2D.set_deferred("disabled", true)
-	alive = false
+	disable_self()
 	if (in_play):
 		respawn_timer = get_node("RespawnTimer")
 		respawn_timer.set_wait_time(respawn_time)
@@ -92,7 +93,6 @@ func _on_RespawnTimer_timeout():
 	invuln_timer.set_wait_time(respawn_time)
 	invuln_timer.start()
 	alive = true
-
 
 func _on_InvulnTimer_timeout():
 	$DamageDetector/CollisionShape2D.disabled = false

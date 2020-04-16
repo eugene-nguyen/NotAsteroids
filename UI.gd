@@ -7,7 +7,7 @@ func life_count(lives):
 	$LifeLabel.show()
 
 func score_count(score):
-	$ScoreLabel.text = str(score)
+	$ScoreValue.text = str(score)
 	$ScoreValue.show()
 
 func show_message(text):
@@ -25,7 +25,7 @@ func show_game_over():
 	$MessageLabel.text="Eugenes Creme"
 	$MessageLabel.show()
 	
-	yield(get_tree().create_timer(1),"timeout")
+	#yield(get_tree().create_timer(1),"timeout")
 	
 	$StartButton.show()
 	

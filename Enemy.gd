@@ -30,11 +30,9 @@ func _process(delta):
 	position.x = wrapf(position.x, -screen_buffer, screen_size.x + screen_buffer)
 	position.y = wrapf(position.y, -screen_buffer, screen_size.y + screen_buffer)
 
-func _on_EnemyDetector_body_shape_entered(body_id, body, body_shape, area_shape):
-	print("enemies touched! ew!") 
-	#velocity = velocity.bounce()
-
 func _on_BulletDetector_area_entered(area):
 	emit_signal("enemy_got_hit")
 	queue_free()
 
+func _on_World_game_over():
+	queue_free()
