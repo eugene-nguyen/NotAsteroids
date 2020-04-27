@@ -12,12 +12,10 @@ extents = Vector2( 31.7957, 31.9637 )
 script = ExtResource( 3 )
 
 [node name="Player" type="KinematicBody2D" parent="."]
-position = Vector2( 478.622, 276.808 )
+position = Vector2( 640, 360 )
 collision_layer = 0
 collision_mask = 0
 script = ExtResource( 2 )
-turn_speed = 200
-move_speed = 400
 
 [node name="Sprite" type="Sprite" parent="Player"]
 rotation = 1.5708
@@ -30,23 +28,18 @@ collision_mask = 2
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Player/DamageDetector"]
 shape = SubResource( 1 )
 
-[node name="RespawnTimer" type="Timer" parent="Player"]
-
 [node name="InvulnTimer" type="Timer" parent="Player"]
 
-[node name="StartPosition" type="Position2D" parent="."]
-position = Vector2( 640, 360 )
+[node name="RespawnTimer" type="Timer" parent="Player"]
 
 [node name="StartTimer" type="Timer" parent="."]
 wait_time = 2.0
 one_shot = true
 
 [node name="UI" parent="." instance=ExtResource( 6 )]
-[connection signal="game_over" from="." to="Player" method="_on_zaWordo_game_over"]
-[connection signal="hit" from="Player" to="." method="_on_Player_hit"]
-[connection signal="player_got_hit" from="Player" to="." method="_on_Player_player_got_hit"]
+[connection signal="player_damaged" from="Player" to="." method="_on_Player_player_damaged"]
 [connection signal="area_entered" from="Player/DamageDetector" to="Player" method="_on_DamageDetector_area_entered"]
-[connection signal="timeout" from="Player/RespawnTimer" to="Player" method="_on_RespawnTimer_timeout"]
 [connection signal="timeout" from="Player/InvulnTimer" to="Player" method="_on_InvulnTimer_timeout"]
+[connection signal="timeout" from="Player/RespawnTimer" to="Player" method="_on_RespawnTimer_timeout"]
 [connection signal="timeout" from="StartTimer" to="." method="_on_StartTimer_timeout"]
 [connection signal="start_game" from="UI" to="." method="_on_UI_start_game"]

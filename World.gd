@@ -8,18 +8,19 @@ var score = 0
 var Enemy = preload("res://Enemy.tscn")
 var rng = RandomNumberGenerator.new()
 var remaining_enemies
-var max_enemies_in_round
-var current_min_enemies = 8
+var current_min_enemies = 6
 var current_max_enemies = 10
 
 # Signals.
 signal game_over
 
-func spawn_enemies(min_enemies, max_enemies):
-	max_enemies_in_round = rng.randi_range(min_enemies, max_enemies)
-	remaining_enemies = max_enemies_in_round
+func update_scoreboard():
+	$UI.life_count(lives)
+	$UI.score_count(score)
+
+func spawn_enemies(number_to_spawn):
 	var i = 0
-	for i in range(max_enemies_in_round):
+	for i in range(number_to_spawn):
 		var enemy_x_position = rng.randi_range(0, 3000)
 		var enemy_y_position = rng.randi_range(0, 3000)
 		var enemy_turn_speed = rng.randi_range(-100, 100)
@@ -47,10 +48,11 @@ func _process(delta):
 	pass
 
 func _on_StartTimer_timeout():
-	$Player.start($StartPosition.position)
-	current_min_enemies += 3
-	current_max_enemies += 3
-	spawn_enemies(current_min_enemies, current_max_enemies)
+	$Player.spawn_self()
+	remaining_enemies = rng.randi_range(current_min_enemies, current_max_enemies)
+	spawn_enemies(remaining_enemies)
+	current_min_enemies = min(current_min_enemies + 1, 20)
+	current_max_enemies = min(current_max_enemies + 3, 30)
 	$StartTimer.stop()
 
 func _on_UI_start_game():
@@ -58,23 +60,22 @@ func _on_UI_start_game():
 	score = 0
 	current_min_enemies = 8
 	current_max_enemies = 10
-	$UI.life_count(lives)
-	$UI.score_count(score)
+	update_scoreboard()
 	round_start()
-
-func _on_Player_player_got_hit():
-	lives -= 1
-	score -= 100
-	$UI.life_count(lives)
-	$UI.score_count(score)
-	if (lives == 0):
-		emit_signal("game_over")
-		$UI.show_game_over()
 
 func _on_Enemy_enemy_got_hit():
 	remaining_enemies -= 1
 	score += 100
-	$UI.score_count(score)
 	if (remaining_enemies == 0):
-		lives += min(lives + 1, 10)
+		lives = min(lives + 1, 10)
 		round_start()
+	update_scoreboard()
+
+func _on_Player_player_damaged():
+	lives -= 1
+	score -= 100
+	update_scoreboard()
+	if (lives == 0):
+		$Player.set_game_status(false)
+		emit_signal("game_over")
+		$UI.show_game_over()
