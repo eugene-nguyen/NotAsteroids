@@ -60,6 +60,7 @@ func spawn_self():
 	motion = Vector2(0, 0)
 	set_timer(invuln_timer)
 	show()
+	$Shield.show()
 
 func set_timer(timer):
 	timer.set_wait_time(time_interval)
@@ -93,6 +94,7 @@ func _on_DamageDetector_area_entered(area):
 
 func _on_InvulnTimer_timeout():
 	$DamageDetector/CollisionShape2D.disabled = false
+	$Shield.hide()
 	invuln_timer.stop()
 
 func _on_RespawnTimer_timeout():
