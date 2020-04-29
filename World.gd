@@ -65,7 +65,7 @@ func _on_UI_start_game():
 
 func _on_Enemy_enemy_got_hit():
 	score += 100
-	if (get_tree().get_nodes_in_group("ENEMIES").size()):
+	if (get_tree().get_nodes_in_group("ENEMIES").size() <= 1):
 		lives = min(lives + 1, 10)
 		round_start()
 	update_scoreboard()
