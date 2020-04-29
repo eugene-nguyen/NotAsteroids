@@ -7,9 +7,9 @@ var score = 0
 # Enemy variables.
 var Enemy = preload("res://Enemy.tscn")
 var rng = RandomNumberGenerator.new()
-var remaining_enemies
+var enemies_in_round
 var current_min_enemies = 6
-var current_max_enemies = 10
+var current_max_enemies = 12
 
 # Signals.
 signal game_over
@@ -49,24 +49,23 @@ func _process(delta):
 
 func _on_StartTimer_timeout():
 	$Player.spawn_self()
-	remaining_enemies = rng.randi_range(current_min_enemies, current_max_enemies)
-	spawn_enemies(remaining_enemies)
+	enemies_in_round = rng.randi_range(current_min_enemies, current_max_enemies)
+	spawn_enemies(enemies_in_round)
 	current_min_enemies = min(current_min_enemies + 1, 20)
-	current_max_enemies = min(current_max_enemies + 3, 30)
+	current_max_enemies = min(current_max_enemies + 2, 40)
 	$StartTimer.stop()
 
 func _on_UI_start_game():
 	lives = 3
 	score = 0
-	current_min_enemies = 8
-	current_max_enemies = 10
+	current_min_enemies = 6
+	current_max_enemies = 12
 	update_scoreboard()
 	round_start()
 
 func _on_Enemy_enemy_got_hit():
-	remaining_enemies -= 1
 	score += 100
-	if (remaining_enemies == 0):
+	if (get_tree().get_nodes_in_group("ENEMIES").size()):
 		lives = min(lives + 1, 10)
 		round_start()
 	update_scoreboard()
