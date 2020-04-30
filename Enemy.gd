@@ -1,7 +1,7 @@
 extends KinematicBody2D
 
-var turn_speed
-var move_speed
+var turn_speed = 0
+var move_speed = 0
 var velocity = Vector2()
 
 var screen_size
@@ -31,8 +31,8 @@ func _process(delta):
 	position.y = wrapf(position.y, -screen_buffer, screen_size.y + screen_buffer)
 
 func _on_BulletDetector_area_entered(area):
-	
 	emit_signal("enemy_got_hit")
+	print("Signal emitted!")
 	queue_free()
 
 func _on_World_game_over():

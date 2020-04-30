@@ -40,6 +40,7 @@ func _ready():
 
 func _on_StartButton_pressed():
 	$StartButton.hide()
+	$StartButton2.hide()
 	emit_signal("start_game")
 	print("Button was printed")
 
@@ -51,3 +52,7 @@ func pressed():
 
 func _on_MessageTimer_timeout():
 	$MessageLabel.hide()
+
+
+func _on_StartButton2_pressed():
+	show_message("Enhanced is not ready yet!")

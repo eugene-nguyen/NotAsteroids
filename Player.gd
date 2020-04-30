@@ -54,7 +54,6 @@ func shoot(move_direction):
 
 func despawn_self():
 	$DamageDetector/CollisionShape2D.set_deferred("disabled", true)
-	
 	can_input = false
 	hide()
 
