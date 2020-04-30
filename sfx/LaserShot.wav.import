@@ -12,10 +12,10 @@ dest_files=[ "res://.import/LaserShot.wav-49dfbfdea19d1f046b02674993e7765f.sampl
 [params]
 
 force/8_bit=false
-force/mono=false
-force/max_rate=false
+force/mono=true
+force/max_rate=true
 force/max_rate_hz=44100
-edit/trim=false
-edit/normalize=false
+edit/trim=true
+edit/normalize=true
 edit/loop=false
 compress/mode=0

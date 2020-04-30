@@ -44,6 +44,7 @@ func get_input(delta, move_direction):
 
 func shoot(move_direction):
 	var b = Bullet.instance()
+	
 	b.start(position, rotation)
 	get_parent().add_child(b)
 
