@@ -34,9 +34,10 @@ func get_input(delta, move_direction):
 		
 		if Input.is_action_pressed("ui_up"):
 			motion = motion.linear_interpolate(move_direction, acceleration)
+			$Sprite.animation = "Go"
 		else:
 			motion = motion.linear_interpolate(Vector2(0, 0), deceleration)
-		
+			$Sprite.animation = "Stopped"
 		if Input.is_action_just_pressed("ui_accept"):
 			shoot(move_direction)
 	else:
@@ -50,8 +51,10 @@ func shoot(move_direction):
 	motion = motion.linear_interpolate(-move_direction, acceleration*1.5)
 
 # General methods.
+
 func despawn_self():
 	$DamageDetector/CollisionShape2D.set_deferred("disabled", true)
+	
 	can_input = false
 	hide()
 
@@ -89,8 +92,11 @@ func _process(delta):
 
 # Signal connections.
 func _on_DamageDetector_area_entered(area):
+	
 	emit_signal("player_damaged")
 	$"AudioGameOverCrash".play()
+
+	
 	despawn_self()
 	if (game_active):
 		set_timer(respawn_timer)
