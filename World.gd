@@ -41,6 +41,7 @@ func round_start():
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	$"AudioMusic1".play()
 	rng.randomize()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -62,7 +63,7 @@ func _on_UI_start_game():
 	current_max_enemies = 12
 	update_scoreboard()
 	round_start()
-	$"AudioMusic1".play()
+	
 
 func _on_Enemy_enemy_got_hit():
 	score += 100
@@ -70,6 +71,7 @@ func _on_Enemy_enemy_got_hit():
 		lives = min(lives + 1, 10)
 		round_start()
 	update_scoreboard()
+	$"AudioBulletHit".play()
 
 func _on_Player_player_damaged():
 	lives -= 1
