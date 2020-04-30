@@ -4,6 +4,7 @@ var speed = 750
 var velocity = Vector2()
 
 func start(pos, dir):
+	
 	rotation = dir
 	position = pos
 	velocity = Vector2(speed, 0).rotated(rotation)

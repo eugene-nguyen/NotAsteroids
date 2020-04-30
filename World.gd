@@ -62,6 +62,7 @@ func _on_UI_start_game():
 	current_max_enemies = 12
 	update_scoreboard()
 	round_start()
+	$"AudioMusic1".play()
 
 func _on_Enemy_enemy_got_hit():
 	score += 100

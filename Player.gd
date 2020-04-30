@@ -44,9 +44,10 @@ func get_input(delta, move_direction):
 
 func shoot(move_direction):
 	var b = Bullet.instance()
-	
+	$"AudioShooting".play()
 	b.start(position, rotation)
 	get_parent().add_child(b)
+	motion = motion.linear_interpolate(-move_direction, acceleration*1.5)
 
 # General methods.
 func despawn_self():
@@ -89,6 +90,7 @@ func _process(delta):
 # Signal connections.
 func _on_DamageDetector_area_entered(area):
 	emit_signal("player_damaged")
+	$"AudioGameOverCrash".play()
 	despawn_self()
 	if (game_active):
 		set_timer(respawn_timer)
