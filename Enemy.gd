@@ -31,6 +31,7 @@ func _process(delta):
 	position.y = wrapf(position.y, -screen_buffer, screen_size.y + screen_buffer)
 
 func _on_BulletDetector_area_entered(area):
+	
 	emit_signal("enemy_got_hit")
 	queue_free()
 
