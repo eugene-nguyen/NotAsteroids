@@ -27,8 +27,10 @@ func spawn_enemies(number_to_spawn):
 		var enemy_move_speed = rng.randi_range(0, 100)
 		var enemy_position = Vector2(enemy_x_position, enemy_y_position)
 		var enemy_rotation = rng.randi_range(0, 360)
+		var enemy_scale = rng.randf_range(0.5, 2.5)
 		var e = Enemy.instance()
 		e.start(enemy_position, enemy_rotation, enemy_move_speed, enemy_turn_speed)
+		e.set_scale(Vector2(enemy_scale, enemy_scale))
 		e.connect("enemy_got_hit", self, "_on_Enemy_enemy_got_hit")
 		connect("game_over", e, "_on_World_game_over")
 		add_child(e)
@@ -66,6 +68,7 @@ func _on_UI_start_game():
 	
 
 func _on_Enemy_enemy_got_hit():
+	print("Signal received!")
 	score += 100
 	if (get_tree().get_nodes_in_group("ENEMIES").size() <= 1):
 		lives = min(lives + 1, 10)
