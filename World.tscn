@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://Art/shieldArtboard 1space.png" type="Texture" id=1]
 [ext_resource path="res://Player.gd" type="Script" id=2]
@@ -11,6 +11,8 @@
 [ext_resource path="res://Art/ShipArtboard 1space.png" type="Texture" id=9]
 [ext_resource path="res://Art/shipfireArtboard 1space.png" type="Texture" id=10]
 [ext_resource path="res://Art/space-safari-background.png" type="Texture" id=11]
+[ext_resource path="res://music/End Music.ogg" type="AudioStream" id=12]
+[ext_resource path="res://music/middle music.ogg" type="AudioStream" id=13]
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
@@ -91,6 +93,15 @@ one_shot = true
 
 [node name="AudioMusic1" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 7 )
+autoplay = true
+
+[node name="AudioMusic2" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 13 )
+volume_db = 2.796
+autoplay = true
+
+[node name="AudioMusic3" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 12 )
 autoplay = true
 
 [node name="AudioBulletHit" type="AudioStreamPlayer" parent="."]
