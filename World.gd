@@ -14,6 +14,9 @@ var current_max_enemies = 12
 var Powerup = preload("res://powerup.tscn")
 var powerup_in_the_field = false
 
+# Audio Variables
+var audioPosition = 0.0
+
 # Signals.
 signal game_over
 var variant = false
@@ -44,7 +47,18 @@ func round_start():
 	$StartTimer.set_wait_time(3)
 	$StartTimer.start()
 	$UI.show_message("Get Ready")
-	
+	if score < 15000:
+		audioPosition = $'AudioMusic1'.get_playback_position()
+		$"AudioMusic1".play(audioPosition)
+	elif score < 30000:
+		$"AudioMusic1".stop()
+		audioPosition = $'AudioMusic2'.get_playback_position()
+		$"AudioMusic2".play(audioPosition)
+	else:
+		$"AudioMusic2".stop()
+		audioPosition = $'AudioMusic3'.get_playback_position()
+		$"AudioMusic3".play(audioPosition)
+		
 func variant_round_start():
 	$poweruptimer.set_wait_time(8)
 	$poweruptimer.start()
@@ -52,7 +66,6 @@ func variant_round_start():
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	$"AudioMusic1".play()
 	rng.randomize()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
