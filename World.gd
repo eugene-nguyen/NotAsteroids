@@ -11,8 +11,12 @@ var enemies_in_round
 var current_min_enemies = 6
 var current_max_enemies = 12
 
+var Powerup = preload("res://powerup.tscn")
+var powerup_in_the_field = false
+
 # Signals.
 signal game_over
+var variant = false
 
 func update_scoreboard():
 	$UI.life_count(lives)
@@ -40,6 +44,11 @@ func round_start():
 	$StartTimer.set_wait_time(3)
 	$StartTimer.start()
 	$UI.show_message("Get Ready")
+	
+func variant_round_start():
+	$poweruptimer.set_wait_time(8)
+	$poweruptimer.start()
+	round_start()
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -67,19 +76,27 @@ func _on_UI_start_game():
 	round_start()
 	
 func _on_UI_start_enhanced():
-	lives = 1
+	variant = true
+	lives = 3
 	score = 0
 	current_min_enemies = 8
 	current_max_enemies = 14
 	update_scoreboard()
-	round_start()
+	variant_round_start()
 
 func _on_Enemy_enemy_got_hit():
-	print("Signal received!")
 	score += 100
 	if (get_tree().get_nodes_in_group("ENEMIES").size() <= 1):
-		lives = min(lives + 1, 10)
-		round_start()
+		if (variant):
+			variant_round_start()
+			lives = min(lives + 1, 5)
+			current_min_enemies = min(current_min_enemies + 2, 40)
+			current_max_enemies = min(current_max_enemies + 2, 60)
+		else:
+			round_start()
+			lives = min(lives + 1, 10)
+			current_min_enemies = min(current_min_enemies + 2, 20)
+			current_max_enemies = min(current_max_enemies + 2, 30)
 	update_scoreboard()
 	$"AudioBulletHit".play()
 
@@ -91,3 +108,18 @@ func _on_Player_player_damaged():
 		$Player.set_game_status(false)
 		emit_signal("game_over")
 		$UI.show_game_over()
+
+
+func _on_poweruptimer_timeout():
+	$poweruptimer.stop()
+	print("we got this far")
+	var powerup_x_position = rng.randi_range(0, 1280)
+	var powerup_y_position = rng.randi_range(0, 720)
+	var powerup_position = Vector2(powerup_x_position, powerup_y_position)
+	
+	var e = Powerup.instance()
+	e.start(powerup_position)
+	e.connect("powerup_get", self, "_on_powerup_powerup_get")
+	add_child(e)
+	
+	powerup_in_the_field = true

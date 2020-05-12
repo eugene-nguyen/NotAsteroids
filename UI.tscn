@@ -50,7 +50,7 @@ margin_right = 1008.92
 margin_bottom = 449.625
 custom_fonts/font = SubResource( 2 )
 action_mode = 0
-text = "Enhanced"
+text = "Variant"
 __meta__ = {
 "_edit_use_anchors_": false
 }

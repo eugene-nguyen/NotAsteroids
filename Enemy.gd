@@ -32,7 +32,6 @@ func _process(delta):
 
 func _on_BulletDetector_area_entered(area):
 	emit_signal("enemy_got_hit")
-	print("Signal emitted!")
 	queue_free()
 
 func _on_World_game_over():

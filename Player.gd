@@ -108,3 +108,8 @@ func _on_InvulnTimer_timeout():
 func _on_RespawnTimer_timeout():
 	spawn_self()
 	respawn_timer.stop()
+
+func _on_powerupdetector_area_entered(area):
+	set_timer(invuln_timer)
+	$DamageDetector/CollisionShape2D.set_deferred("disabled", true)
+	$Shield.show()
