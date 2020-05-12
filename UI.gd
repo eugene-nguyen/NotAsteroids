@@ -1,6 +1,7 @@
 extends CanvasLayer
 
 signal start_game
+signal start_enhanced
 
 func life_count(lives):
 	$LifeLabel.text = str(lives)
@@ -43,7 +44,6 @@ func _on_StartButton_pressed():
 	$StartButton2.hide()
 	emit_signal("start_game")
 	print("Button was printed")
-
 
 
 func pressed():

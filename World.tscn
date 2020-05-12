@@ -110,4 +110,5 @@ volume_db = -9.087
 [connection signal="timeout" from="Player/InvulnTimer" to="Player" method="_on_InvulnTimer_timeout"]
 [connection signal="timeout" from="Player/RespawnTimer" to="Player" method="_on_RespawnTimer_timeout"]
 [connection signal="timeout" from="StartTimer" to="." method="_on_StartTimer_timeout"]
+[connection signal="start_enhanced" from="UI" to="." method="_on_UI_start_enhanced"]
 [connection signal="start_game" from="UI" to="." method="_on_UI_start_game"]
