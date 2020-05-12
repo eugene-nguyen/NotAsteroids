@@ -67,10 +67,10 @@ func _on_UI_start_game():
 	round_start()
 	
 func _on_UI_start_enhanced():
-	lives = 3
+	lives = 1
 	score = 0
-	current_min_enemies = 6
-	current_max_enemies = 12
+	current_min_enemies = 8
+	current_max_enemies = 14
 	update_scoreboard()
 	round_start()
 
