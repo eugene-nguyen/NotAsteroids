@@ -55,4 +55,7 @@ func _on_MessageTimer_timeout():
 
 
 func _on_StartButton2_pressed():
-	show_message("Enhanced is not ready yet!")
+	$StartButton.hide()
+	$StartButton2.hide()
+	emit_signal("start_enhanced")
+	print("Enhanced start Button was printed")

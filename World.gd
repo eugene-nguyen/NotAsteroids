@@ -66,6 +66,13 @@ func _on_UI_start_game():
 	update_scoreboard()
 	round_start()
 	
+func _on_UI_start_enhanced():
+	lives = 3
+	score = 0
+	current_min_enemies = 6
+	current_max_enemies = 12
+	update_scoreboard()
+	round_start()
 
 func _on_Enemy_enemy_got_hit():
 	print("Signal received!")

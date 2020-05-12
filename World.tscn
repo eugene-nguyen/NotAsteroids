@@ -33,6 +33,7 @@ extents = Vector2( 31.7957, 31.9637 )
 [sub_resource type="AudioStreamRandomPitch" id=3]
 resource_local_to_scene = true
 audio_stream = ExtResource( 4 )
+random_pitch = 1.2
 
 [node name="zaWordo" type="Node"]
 script = ExtResource( 3 )
@@ -78,7 +79,7 @@ texture = ExtResource( 1 )
 rotation = 1.5708
 stream = SubResource( 3 )
 volume_db = -7.0
-pitch_scale = 1.1
+pitch_scale = 1.2
 attenuation = 2.07053
 
 [node name="AudioGameOverCrash" type="AudioStreamPlayer2D" parent="Player"]
@@ -93,16 +94,13 @@ one_shot = true
 
 [node name="AudioMusic1" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 7 )
-autoplay = true
 
 [node name="AudioMusic2" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 13 )
 volume_db = 2.796
-autoplay = true
 
 [node name="AudioMusic3" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 12 )
-autoplay = true
 
 [node name="AudioBulletHit" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 8 )
